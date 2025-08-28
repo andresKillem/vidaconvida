@@ -189,7 +189,7 @@ const Gallery = () => {
               {/* Content */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
                 <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                  {(item.type === 'ministry' || item.type === 'community' || item.type === 'fellowship') && (
+                  {(item.type === 'ministry' || item.type === 'teaching') && (
                     <>
                       <h3 className="text-xl font-bold font-montserrat mb-2 drop-shadow-lg">{item.title}</h3>
                       <p className="text-sm opacity-90 leading-relaxed drop-shadow">{item.subtitle}</p>
