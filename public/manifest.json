@@ -1,0 +1,35 @@
+{
+  "name": "Vida con Vida Miami - Iglesia Cristiana",
+  "short_name": "Vida con Vida",
+  "description": "Iglesia Vida con Vida Miami - Una familia de fe en Doral, FL. Servicios domingos 10:30 AM. Respondemos bíblicamente a la vida.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait-primary",
+  "lang": "es-US",
+  "categories": ["lifestyle", "religion", "social"],
+  "icons": [
+    {
+      "src": "/images/logoVida.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/logoVida.jpg", 
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/frontVida.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Congregación adorando"
+    }
+  ]
+}
