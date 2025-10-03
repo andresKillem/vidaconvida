@@ -103,26 +103,23 @@ const Schedule = () => {
           ))}
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16 animate-on-scroll">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold font-montserrat text-gray-900 mb-4">
+        {/* Call to Action - Compact */}
+        <div className="text-center mt-12 animate-on-scroll">
+          <div className="bg-gradient-to-r from-orange-50 to-teal-50 rounded-xl p-6 max-w-3xl mx-auto border border-orange-200">
+            <h3 className="text-xl font-bold font-montserrat text-gray-900 mb-3">
               ¡Ven y únete a nuestra familia!
             </h3>
-            <p className="text-lg text-gray-600 mb-6">
-              No importa de donde vengas o en qué etapa de la vida te encuentres, aquí tienes un lugar.
-            </p>
-            <div className="flex justify-center items-center gap-6 text-sm text-gray-600">
+            <div className="flex justify-center items-center gap-4 text-sm text-gray-700 flex-wrap">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-orange-500 rounded-full" />
+                <div className="w-2 h-2 bg-orange-500 rounded-full" />
                 <span>Ambiente familiar</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-teal-500 rounded-full" />
+                <div className="w-2 h-2 bg-teal-500 rounded-full" />
                 <span>Cuidado de niños</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                <div className="w-2 h-2 bg-yellow-500 rounded-full" />
                 <span>Estacionamiento gratis</span>
               </div>
             </div>

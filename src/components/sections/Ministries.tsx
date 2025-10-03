@@ -118,21 +118,21 @@ const Ministries = () => {
         <div className="text-center mt-16 animate-on-scroll">
           <div className="bg-gradient-to-r from-gray-100 to-white rounded-2xl p-8 md:p-12 shadow-lg">
             <h3 className="text-2xl md:text-3xl font-bold font-montserrat text-gray-900 mb-4">
-              Liderazgo Pastoral
+              Nuestros Pastores
             </h3>
             <div className="flex justify-center items-center gap-8 text-lg text-gray-800 flex-wrap">
               <div className="text-center">
-                <p className="font-semibold">Pastor Mauricio Ramírez</p>
-                <p className="text-sm text-gray-600">Pastor Principal</p>
+                <p className="font-semibold">Mauricio Ramírez</p>
+                <p className="text-sm text-gray-600">Pastor</p>
               </div>
               <div className="w-px h-12 bg-gray-600 hidden md:block" />
               <div className="text-center">
-                <p className="font-semibold">Pastor Jhon Arevalo</p>
-                <p className="text-sm text-gray-600">Pastor Asociado</p>
+                <p className="font-semibold">Jhon Arevalo</p>
+                <p className="text-sm text-gray-600">Pastor</p>
               </div>
               <div className="w-px h-12 bg-gray-600 hidden md:block" />
               <div className="text-center">
-                <p className="font-semibold">Pastor Marcos Santos</p>
+                <p className="font-semibold">Marcos Santos</p>
                 <p className="text-sm text-gray-600">Pastor de Jóvenes</p>
               </div>
             </div>

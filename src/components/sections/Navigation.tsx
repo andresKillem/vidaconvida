@@ -27,6 +27,9 @@ const Navigation = () => {
   const navItems = [
     { id: 'hero', label: 'Inicio' },
     { id: 'about', label: 'Acerca' },
+    { id: 'values', label: 'Valores' },
+    { id: 'history', label: 'Historia' },
+    { id: 'pastors', label: 'Pastores' },
     { id: 'schedule', label: 'Servicios' },
     { id: 'ministries', label: 'Ministerios' },
     { id: 'gallery', label: 'Galería' },

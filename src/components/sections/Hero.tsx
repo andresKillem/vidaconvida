@@ -10,7 +10,7 @@ const Hero = () => {
   const [timeUntilService, setTimeUntilService] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  // Beautiful hero background images
+  // Beautiful hero background images - more subtle and church-focused
   const heroImages = [
     '/images/frontVida.jpg',
     '/images/508389914_18317686120230284_2398832695113211027_n.jpg',
@@ -36,7 +36,7 @@ const Hero = () => {
       setCurrentImageIndex((prevIndex) => 
         prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
       )
-    }, 5000) // Change image every 5 seconds
+    }, 8000) // Change image every 8 seconds - slower for less intrusion
 
     return () => clearInterval(slideInterval)
   }, [heroImages.length])
@@ -63,17 +63,26 @@ const Hero = () => {
               src={image}
               alt="Vida con Vida Miami - Congregación adorando"
               fill
-              className="object-cover"
+              className="object-cover scale-105"
               priority={index === 0}
+              style={{
+                filter: 'brightness(0.6) contrast(1.1) saturate(0.8)',
+              }}
             />
           </div>
         ))}
         
-        {/* Elegant Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+        {/* Elegant Overlay - Much more subtle for church atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
         
-        {/* Additional Sophistication */}
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-900/20 via-transparent to-teal-900/20" />
+        {/* Additional Sophistication - Church colors with more opacity */}
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-900/50 via-transparent to-teal-900/50" />
+        
+        {/* Soft church lighting effect - more pronounced */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-teal-500/20" />
+        
+        {/* Additional overlay for less intrusive images */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       {/* Floating Shapes */}

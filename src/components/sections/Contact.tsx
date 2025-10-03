@@ -37,12 +37,42 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    setTimeout(() => {
-      alert('¡Gracias por contactarnos! Te responderemos pronto.')
+    try {
+      // Create email content
+      const emailContent = `
+Nuevo mensaje de contacto desde vidaconvidamiami.com
+
+Nombre: ${formData.name}
+Email: ${formData.email}
+Teléfono: ${formData.phone || 'No proporcionado'}
+Primera vez: ${formData.isFirstTime ? 'Sí' : 'No'}
+
+Mensaje:
+${formData.message}
+
+---
+Enviado desde el formulario de contacto de vidaconvidamiami.com
+      `.trim()
+
+      // Create mailto link with pre-filled content
+      const subject = encodeURIComponent('Nuevo mensaje de contacto - vidaconvidamiami.com')
+      const body = encodeURIComponent(emailContent)
+      const mailtoLink = `mailto:info@vidaconvidamiami.org?subject=${subject}&body=${body}`
+      
+      // Open email client
+      window.open(mailtoLink, '_blank')
+      
+      // Show success message
+      alert('¡Gracias por contactarnos! Se abrirá tu cliente de email para enviar el mensaje.')
+      
+      // Reset form
       setFormData({ name: '', email: '', phone: '', message: '', isFirstTime: false })
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error)
+      alert('Hubo un error al procesar tu mensaje. Por favor, inténtalo de nuevo.')
+    } finally {
       setIsSubmitting(false)
-    }, 1000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

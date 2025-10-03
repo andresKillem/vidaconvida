@@ -27,20 +27,20 @@ const About = () => {
   const features = [
     {
       icon: Users,
-      title: 'Cultivamos Relaciones',
-      description: 'Creemos en el poder de las relaciones genuinas. Aquí encontrarás una familia que te apoya, ora contigo y camina a tu lado en cada etapa de tu vida.',
+      title: 'Visión',
+      description: 'Nuestra visión es ser una familia de discípulos de Cristo que impacta a nuestra ciudad y a las nuevas generaciones. Queremos que cada persona descubra que en Dios hay propósito, esperanza y un amor que transforma vidas.',
       animation: 'animate-slide-left'
     },
     {
       icon: Music,
-      title: 'Adoración y Alabanza',
-      description: 'Experimentamos la presencia de Dios a través de una adoración vibrante y llena del Espíritu Santo que transforma corazones.',
+      title: 'Nuestra Misión',
+      description: 'Formar y acompañar discípulos de Cristo en Miami que vivan una fe auténtica, fundamentada en la Palabra, guiados por el Espíritu Santo y el amor del Padre; una familia espiritual que refleja a Jesús, transforma vidas y deja un impacto eterno en nuestra comunidad y en las nuevas generaciones.',
       animation: 'animate-on-scroll'
     },
     {
       icon: Heart,
-      title: 'Sin Importar las Edades',
-      description: 'Desde los más pequeños hasta los más grandes, todos tienen un lugar especial en nuestra familia de fe. Gracias por acompañarnos.',
+      title: 'Ciclo Completo del Discipulado',
+      description: 'CONQUISTAR, CONSOLIDAR, EDIFICAR, ENVIAR Y ACOMPAÑAR. Aquí encontrarás amigos, propósito y un lugar donde crecer en tu fe. Porque al final, somos una gran familia de discípulos que vive para amar y servir como Jesús.',
       animation: 'animate-slide-right'
     }
   ]
@@ -51,10 +51,11 @@ const About = () => {
         {/* Section Header */}
         <div className="text-center mb-16 animate-on-scroll">
           <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-gray-900 mb-4">
-            Nuestra Visión
+            Quiénes Somos
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Domingo a domingo celebramos juntos la presencia de Dios
+          <p className="text-xl text-gray-600 mb-8 max-w-4xl mx-auto">
+            Somos una iglesia apasionada por Cristo, basada en la Biblia y abierta al mover del Espíritu Santo. 
+            Creemos en el amor del Padre que sana, restaura y nos impulsa a impactar a nuestra ciudad y a las nuevas generaciones.
           </p>
           <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
         </div>
