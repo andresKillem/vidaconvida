@@ -5,7 +5,6 @@
 [build.environment]
   NODE_VERSION = "18"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Enable Next.js runtime for API routes and server-side features
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
