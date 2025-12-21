@@ -9,16 +9,23 @@
 4. Crea credenciales (API Key)
 5. Copia la API Key
 
-### 2. Obtener Channel ID
+### 2. Obtener Channel ID (Opcional)
+
+**Nota**: El Channel ID es opcional. La aplicación usa el handle `@VidaConVidaMiami` por defecto y lo resuelve automáticamente.
+
+Si prefieres usar el Channel ID directamente:
 1. Ve a tu canal de YouTube
 2. El Channel ID está en la URL: `https://www.youtube.com/channel/CHANNEL_ID`
 3. O usa esta herramienta: [YouTube Channel ID Finder](https://commentpicker.com/youtube-channel-id.php)
 
 ### 3. Configurar variables de entorno
-Crea un archivo `.env.local` en la raíz del proyecto:
+Crea un archivo `.env.local` en la raíz del proyecto (usa `.env.example` como referencia):
 
 ```env
+# Requerido: API Key de YouTube
 NEXT_PUBLIC_YOUTUBE_API_KEY=tu_api_key_aqui
+
+# Opcional: Channel ID (si no se proporciona, usa el handle @VidaConVidaMiami)
 NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=tu_channel_id_aqui
 ```
 
@@ -52,17 +59,23 @@ Una vez configuradas las variables de entorno:
 
 ## Características
 
+- **Integración completa de YouTube API**: Carga automática de videos recientes del canal
+- **Soporte para Channel Handle**: Usa `@VidaConVidaMiami` automáticamente (no requiere Channel ID)
+- **Estadísticas completas**: Muestra duración formateada y conteo de vistas de cada video
 - **Cache inteligente**: Los datos se almacenan en caché para mejorar el rendimiento
-- **Fallback**: Si las APIs fallan, se muestran datos de ejemplo
+- **Fallback robusto**: Si las APIs fallan o no están configuradas, se muestran datos de ejemplo
+- **Estados de carga**: Indicador visual mientras se cargan los videos
+- **Manejo de errores**: Mensajes informativos si hay problemas con la API
 - **Responsive**: Funciona perfectamente en móviles y desktop
-- **Actualización automática**: El contenido se actualiza sin recargar la página
 
 ## Troubleshooting
 
 ### YouTube API no funciona
-- Verifica que la API Key sea correcta
-- Asegúrate de que la API de YouTube Data v3 esté habilitada
-- Verifica que el Channel ID sea correcto
+- Verifica que la API Key sea correcta en `.env.local`
+- Asegúrate de que la API de YouTube Data v3 esté habilitada en Google Cloud Console
+- Verifica que el Channel ID sea correcto (o deja que la app use el handle automáticamente)
+- Revisa la consola del navegador para mensajes de error específicos
+- Si no está configurada, la app mostrará contenido de respaldo automáticamente
 
 ### Facebook API no funciona
 - Verifica que el Access Token sea válido
