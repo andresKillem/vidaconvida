@@ -1,7 +1,10 @@
 // Configuration for Social Media APIs
 export const socialMediaConfig = {
   youtube: {
-    channelId: 'UC_VIDACONVIDA_CHANNEL_ID', // Replace with actual channel ID
+    // Use channel handle (@VidaConVidaMiami) - will be resolved to ID via API
+    channelHandle: 'VidaConVidaMiami',
+    // Or use channel ID directly if known (starts with UC...)
+    channelId: process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || '',
     apiKey: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || '', // Add to .env.local
   },
   facebook: {
@@ -11,8 +14,9 @@ export const socialMediaConfig = {
 }
 
 // Environment variables needed:
-// NEXT_PUBLIC_YOUTUBE_API_KEY=your_youtube_api_key
-// NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN=your_facebook_access_token
+// NEXT_PUBLIC_YOUTUBE_API_KEY=your_youtube_api_key_here
+// NEXT_PUBLIC_YOUTUBE_CHANNEL_ID=your_channel_id_here (optional, will use handle if not set)
+// NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN=your_facebook_access_token_here
 
 export const appConfig = {
   siteName: 'Vida con Vida Miami',

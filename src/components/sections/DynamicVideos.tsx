@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Play, ExternalLink, Calendar, Eye } from 'lucide-react'
-import { YouTubeVideo } from '@/lib/socialMedia'
+import { YouTubeVideo, YouTubeService } from '@/lib/socialMedia'
+import { socialMediaConfig } from '@/lib/config'
 
 const DynamicVideos = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const [videos, setVideos] = useState<YouTubeVideo[]>([])
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,9 +32,10 @@ const DynamicVideos = () => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      // For now, use mock data to ensure the section displays properly
-      // TODO: Implement YouTube API integration when ready
-      // Videos ordered from most recent to oldest
+      setIsLoading(true)
+      setError(null)
+
+      // Mock videos as fallback
       const mockVideos: YouTubeVideo[] = [
         {
           id: '1',
@@ -85,8 +89,33 @@ const DynamicVideos = () => {
         }
       ]
 
+      // Try to fetch from YouTube API if configured
+      if (socialMediaConfig.youtube.apiKey) {
+        try {
+          const youtubeService = new YouTubeService(
+            socialMediaConfig.youtube.apiKey,
+            socialMediaConfig.youtube.channelId,
+            socialMediaConfig.youtube.channelHandle
+          )
+
+          const fetchedVideos = await youtubeService.getRecentVideos(5)
+
+          if (fetchedVideos.length > 0) {
+            setVideos(fetchedVideos)
+            setSelectedVideo(fetchedVideos[0])
+            setIsLoading(false)
+            return
+          }
+        } catch (err) {
+          console.error('Failed to fetch YouTube videos:', err)
+          setError('No se pudieron cargar los videos de YouTube. Mostrando contenido de respaldo.')
+        }
+      }
+
+      // Fall back to mock data
       setVideos(mockVideos)
       setSelectedVideo(mockVideos[0])
+      setIsLoading(false)
     }
 
     fetchVideos()
@@ -100,8 +129,6 @@ const DynamicVideos = () => {
     })
   }
 
-  // Remove loading state to ensure content always shows
-
   return (
     <section ref={sectionRef} id="videos" className="py-20 bg-gray-100">
       <div className="section-container">
@@ -111,7 +138,28 @@ const DynamicVideos = () => {
             Videos de YouTube
           </h2>
           <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+          {error && (
+            <p className="mt-4 text-sm text-orange-600 bg-orange-50 px-4 py-2 rounded-lg inline-block">
+              {error}
+            </p>
+          )}
         </div>
+
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+          </div>
+        ) : (
+          <>
+            {videos.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-gray-600">No hay videos disponibles en este momento.</p>
+              </div>
+            ) : null}
+          </>
+        )}
+
+        {!isLoading && videos.length > 0 && (
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Video Player */}
@@ -216,6 +264,7 @@ const DynamicVideos = () => {
             </div>
           </div>
         </div>
+        )}
       </div>
     </section>
   )
