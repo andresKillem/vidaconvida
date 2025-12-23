@@ -155,14 +155,13 @@ const Ministries = () => {
               <div className="flex flex-col items-center">
                 <div className="bg-white p-4 rounded-2xl shadow-lg">
                   <img
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mailto:secretaria@vidaconvidamiami.com?subject=Donación%20Vida%20con%20Vida&bgcolor=ffffff&color=000000&format=svg"
-                    alt="Código QR para donaciones - Escanea para contribuir"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://enroll.zellepay.com/qr-codes?data=eyJuYW1lIjoiRElTQ0lQTEVTIE9GIENIUklTVCBDSFVSQ0ggU1BBTklTSCBJTkMuIiwiYWN0aW9uIjoicGF5bWVudCIsInRva2VuIjoic3BhbmlzaEB2aWRhY29udmlkYS5jb20ifQ==&bgcolor=ffffff&color=000000&format=png&ecc=H"
+                    alt="Código QR Zelle para donaciones - Disciples of Christ Church Spanish Inc."
                     className="w-48 h-48 md:w-56 md:h-56"
-                    style={{ imageRendering: 'pixelated' }}
                   />
                 </div>
                 <p className="text-sm text-gray-500 mt-3 text-center">
-                  Escanea el código QR para contactarnos
+                  Escanea para donar vía Zelle
                 </p>
               </div>
 
