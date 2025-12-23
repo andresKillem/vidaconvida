@@ -42,17 +42,29 @@ export const metadata: Metadata = {
     "culto cristiano doral",
     "consejeria pastoral miami",
     "iglesia en español miami",
-    "comunidad cristiana doral florida"
+    "comunidad cristiana doral florida",
+    "church in doral",
+    "hispanic church miami",
+    "spanish church doral fl",
+    "iglesia cerca de mi miami",
+    "church near me doral"
   ],
   authors: [{ name: "Vida con Vida Miami" }],
   creator: "Vida con Vida Miami",
   publisher: "Vida con Vida Miami",
+  formatDetection: {
+    email: true,
+    address: true,
+    telephone: true,
+  },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -60,6 +72,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://vidaconvidamiami.com",
+    languages: {
+      "es-US": "https://vidaconvidamiami.com",
+    },
   },
   openGraph: {
     title: "Iglesia Vida con Vida Miami | Iglesia Cristiana en Doral, FL",
@@ -70,10 +85,18 @@ export const metadata: Metadata = {
     siteName: "Vida con Vida Miami",
     images: [
       {
-        url: "/images/frontVida.jpg",
+        url: "https://vidaconvidamiami.com/images/frontVida.jpg",
         width: 1200,
         height: 630,
-        alt: "Iglesia Vida con Vida Miami - Comunidad de fe en Doral",
+        alt: "Iglesia Vida con Vida Miami - Comunidad de fe cristiana en Doral, Florida",
+        type: "image/jpeg",
+      },
+      {
+        url: "https://vidaconvidamiami.com/images/logoVida.jpg",
+        width: 400,
+        height: 400,
+        alt: "Logo Iglesia Vida con Vida Miami",
+        type: "image/jpeg",
       },
     ],
   },
@@ -81,15 +104,23 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Iglesia Vida con Vida Miami | Doral, FL",
     description: "Una familia de fe cristiana. Servicios domingos 10:30 AM. ¡Eres parte de esta familia!",
-    images: ["/images/frontVida.jpg"],
+    images: ["https://vidaconvidamiami.com/images/frontVida.jpg"],
+    creator: "@vidaconvida",
   },
-  verification: {
-    google: "tu-codigo-de-verificacion-google",
+  other: {
+    "geo.region": "US-FL",
+    "geo.placename": "Doral",
+    "geo.position": "25.7897;-80.3389",
+    "ICBM": "25.7897, -80.3389",
+    "og:locality": "Doral",
+    "og:region": "FL",
+    "og:postal-code": "33172",
+    "og:country-name": "USA",
   },
   category: "religion",
 };
 
-const jsonLd = {
+const jsonLdChurch = {
   "@context": "https://schema.org",
   "@type": "Church",
   "name": "Iglesia Vida con Vida Miami",
@@ -140,6 +171,53 @@ const jsonLd = {
   "priceRange": "Free"
 };
 
+const jsonLdFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el horario de los servicios de Iglesia Vida con Vida Miami?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nuestros servicios presenciales son los domingos a las 10:30 AM en Doral, FL. Los miércoles a las 8:00 PM tenemos estudio bíblico vía Zoom."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Dónde está ubicada la Iglesia Vida con Vida Miami?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Estamos ubicados en 10200 NW 25 St, Unit 113 Mezzanine, 2nd Floor, Doral, FL 33172."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tienen ministerios para niños y jóvenes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, tenemos Vida Kids para niños y Vida Youth para jóvenes de 12 a 17 años. Ambos ministerios ofrecen enseñanza bíblica adaptada a cada edad."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Ofrecen consejería pastoral?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, ofrecemos ayuda pastoral y sanidad interior. Puede contactarnos al (561) 591-4771 o por email a secretaria@vidaconvidamiami.com para agendar una cita."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo puedo donar a la iglesia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puede donar vía Zelle a secretaria@vidaconvidamiami.com, mediante cheque a nombre de 'Disciple of Christ Church Spanish', o en efectivo durante los servicios."
+      }
+    }
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -153,7 +231,11 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdChurch) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFAQ) }}
         />
       </head>
       <body
