@@ -57,7 +57,7 @@ Enviado desde el formulario de contacto de vidaconvidamiami.com
       // Create mailto link with pre-filled content
       const subject = encodeURIComponent('Nuevo mensaje de contacto - vidaconvidamiami.com')
       const body = encodeURIComponent(emailContent)
-      const mailtoLink = `mailto:info@vidaconvidamiami.org?subject=${subject}&body=${body}`
+      const mailtoLink = `mailto:secretaria@vidaconvidamiami.com?subject=${subject}&body=${body}`
       
       // Open email client
       window.open(mailtoLink, '_blank')
@@ -87,25 +87,25 @@ Enviado desde el formulario de contacto de vidaconvidamiami.com
     {
       icon: MapPin,
       title: 'Dirección',
-      content: '10200 NW 25 St, Unit 113\n2nd Floor, Doral, FL 33172',
+      content: '10200 NW 25 St, Unit 113 Mezzanine\n2nd Floor, Doral, FL 33172',
       action: () => window.open('https://maps.google.com/?q=10200+NW+25+St,+Unit+113,+Doral,+FL+33172', '_blank')
     },
     {
       icon: Clock,
       title: 'Horarios',
-      content: 'Domingos: 10:30 AM\nMiércoles: 7:00 PM\nViernes: 7:30 PM (Grupos)',
+      content: 'Domingos: 10:30 AM\nMiércoles: 8:00 PM (Oración vía Zoom)',
     },
     {
       icon: Phone,
       title: 'Teléfono',
-      content: '(305) 123-4567',
-      action: () => window.open('tel:+13051234567', '_self')
+      content: '(561) 591-4771',
+      action: () => window.open('tel:+15615914771', '_self')
     },
     {
       icon: Mail,
       title: 'Email',
-      content: 'info@vidaconvidamiami.org',
-      action: () => window.open('mailto:info@vidaconvidamiami.org', '_self')
+      content: 'secretaria@vidaconvidamiami.com',
+      action: () => window.open('mailto:secretaria@vidaconvidamiami.com', '_self')
     }
   ]
 
@@ -321,7 +321,7 @@ Enviado desde el formulario de contacto de vidaconvidamiami.com
                   Encuéntranos en Google Maps
                 </h4>
                 <p className="text-gray-600 mb-4">
-                  10200 NW 25 St, Unit 113, 2nd Floor, Doral, FL 33172
+                  10200 NW 25 St, Unit 113 Mezzanine, 2nd Floor, Doral, FL 33172
                 </p>
                 <button className="bg-orange-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-all duration-300">
                   Ver en Google Maps

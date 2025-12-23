@@ -80,7 +80,7 @@ const DynamicVideos = () => {
         {
           id: '5',
           title: '¿Eres independiente, codependiente o interdependiente?',
-          description: 'Pastor Marcos Santos - Relaciones sanas en Cristo',
+          description: 'Relaciones sanas en Cristo - Creciendo juntos',
           thumbnail: '/images/518412642_122146979552763334_4886373583611456787_n.jpg',
           publishedAt: '2024-12-18T10:30:00Z',
           duration: '40:10',

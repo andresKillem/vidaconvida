@@ -88,7 +88,7 @@ const Gallery = () => {
     {
       type: 'sermon' as const,
       title: 'Lucha por tu Familia',
-      subtitle: 'Pastor Marcos Santos',
+      subtitle: 'Mensaje sobre el valor de la familia',
       image: '/images/508712985_18317686111230284_3475606480792674855_n.jpg',
       overlay: 'from-green-900/40 to-teal-900/60',
       youtubeId: 'BF1MYQ4UmkM', // Family ministry sermon

@@ -42,10 +42,10 @@ const Footer = () => {
               Respondemos bíblicamente a la vida.
             </p>
             <div className="space-y-2 text-sm text-gray-400">
-              <p><strong className="text-orange-500">Pastores:</strong></p>
-              <p>Mauricio Ramírez</p>
-              <p>Jhon Arevalo</p>
-              <p>Marcos Santos</p>
+              <p><strong className="text-orange-500">Pastores Principales:</strong></p>
+              <p>Jhon y Angela Arévalo</p>
+              <p><strong className="text-orange-500 mt-2 block">Co-Pastores:</strong></p>
+              <p>Mauricio y Marilei Ramírez</p>
             </div>
           </div>
 
@@ -86,11 +86,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                <span>Miércoles: 7:00 PM (Oración)</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                <span>Viernes: 7:30 PM (Grupos)</span>
+                <span>Miércoles: 8:00 PM (Oración vía Zoom)</span>
               </li>
             </ul>
 
@@ -99,26 +95,26 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" />
                 <span className="text-sm leading-relaxed">
-                  10200 NW 25 St, Unit 113<br />
+                  10200 NW 25 St, Unit 113 Mezzanine<br />
                   2nd Floor, Doral, FL 33172
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                <a 
-                  href="tel:+13051234567" 
+                <a
+                  href="tel:+15615914771"
                   className="text-sm hover:text-yellow-400 transition-colors duration-300"
                 >
-                  (305) 123-4567
+                  (561) 591-4771
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                <a 
-                  href="mailto:info@vidaconvidamiami.org" 
+                <a
+                  href="mailto:secretaria@vidaconvidamiami.com"
                   className="text-sm hover:text-yellow-400 transition-colors duration-300"
                 >
-                  info@vidaconvidamiami.org
+                  secretaria@vidaconvidamiami.com
                 </a>
               </div>
             </div>

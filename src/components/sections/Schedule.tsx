@@ -34,7 +34,7 @@ const Schedule = () => {
     },
     {
       icon: Baby,
-      title: 'Ministerio Infantil',
+      title: 'Vida Kids',
       description: 'Clases dinámicas adaptadas por edades',
       time: 'Durante el servicio',
       color: 'bg-teal-500'
@@ -42,15 +42,15 @@ const Schedule = () => {
     {
       icon: HandHeart,
       title: 'Noche de Oración',
-      description: 'Tiempo de intercesión y búsqueda',
-      time: 'Miércoles 7:00 PM',
+      description: 'Tiempo de intercesión y búsqueda vía Zoom',
+      time: 'Miércoles 8:00 PM',
       color: 'bg-yellow-500'
     },
     {
       icon: Users,
-      title: 'Grupos en Casa',
-      description: 'Compañerismo y estudio bíblico',
-      time: 'Viernes 7:30 PM',
+      title: 'Vida Youth',
+      description: 'Jóvenes creciendo en fe, amistad y propósito (12-17 años)',
+      time: 'Durante el servicio',
       color: 'bg-blue-500'
     }
   ]
