@@ -140,26 +140,86 @@ const Ministries = () => {
           </div>
         </div>
 
-        {/* Donations QR Code Section */}
+        {/* Donations Section - Redesigned */}
         <div className="mt-12 animate-on-scroll">
-          <div className="bg-white rounded-2xl p-8 shadow-xl max-w-2xl mx-auto text-center">
-            <h3 className="text-xl font-bold font-montserrat text-gray-900 mb-4">
+          <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl p-8 md:p-12 shadow-xl max-w-4xl mx-auto border border-orange-200">
+            <h3 className="text-2xl md:text-3xl font-bold font-montserrat text-gray-900 mb-2 text-center">
               Formas de Contribuir
             </h3>
-            <p className="text-gray-600 mb-6">
-              Tu generosidad hace posible que sigamos impactando vidas. Escanea el código QR para hacer tu donación.
+            <p className="text-gray-600 mb-8 text-center">
+              Tu generosidad hace posible que sigamos impactando vidas
             </p>
-            <div className="flex justify-center mb-4">
-              <img
-                src="/images/qr-donations.jpg"
-                alt="QR Code para donaciones"
-                className="w-48 h-48 rounded-lg shadow-md"
-              />
+
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              {/* QR Code - Clean and Large */}
+              <div className="flex flex-col items-center">
+                <div className="bg-white p-4 rounded-2xl shadow-lg">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mailto:secretaria@vidaconvidamiami.com?subject=Donación%20Vida%20con%20Vida&bgcolor=ffffff&color=000000&format=svg"
+                    alt="Código QR para donaciones - Escanea para contribuir"
+                    className="w-48 h-48 md:w-56 md:h-56"
+                    style={{ imageRendering: 'pixelated' }}
+                  />
+                </div>
+                <p className="text-sm text-gray-500 mt-3 text-center">
+                  Escanea el código QR para contactarnos
+                </p>
+              </div>
+
+              {/* Donation Methods */}
+              <div className="space-y-6">
+                {/* Cheque */}
+                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">Cheque</h4>
+                      <p className="text-gray-600 text-sm">&ldquo;Disciple of Christ Church Spanish&rdquo;</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sobre de Ofrendas */}
+                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">Sobre de Ofrendas</h4>
+                      <p className="text-gray-600 text-sm">Disponible durante el servicio</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Transferencia/Zelle */}
+                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900">Zelle / Transferencia</h4>
+                      <a href="mailto:secretaria@vidaconvidamiami.com" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
+                        secretaria@vidaconvidamiami.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="space-y-2 text-sm text-gray-600">
-              <p><strong>Cheque:</strong> &ldquo;Disciple of Christ Church Spanish&rdquo;</p>
-              <p><strong>Transferencia:</strong> secretaria@vidaconvidamiami.com</p>
-            </div>
+
+            <p className="text-center text-gray-500 text-sm mt-8">
+              &ldquo;Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.&rdquo; - 2 Corintios 9:7
+            </p>
           </div>
         </div>
       </div>

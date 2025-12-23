@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
 
-Sitemap: https://vidaconvidamiami.org/sitemap.xml
+# Sitemap
+Sitemap: https://vidaconvidamiami.com/sitemap.xml
+
+# Host
+Host: https://vidaconvidamiami.com
