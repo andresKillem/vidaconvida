@@ -6,7 +6,6 @@
   NODE_VERSION = "18"
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_YOUTUBE_API_KEY"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Enable Next.js runtime for API routes and server-side features
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
