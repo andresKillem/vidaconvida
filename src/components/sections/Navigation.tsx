@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, Heart } from 'lucide-react'
+import { Menu, X, Heart, Sparkles } from 'lucide-react'
+import { featuredEvent, useEventActive } from '@/lib/events'
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const isEventActive = useEventActive(featuredEvent)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,7 +21,9 @@ const Navigation = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // scrollIntoView ignores scroll-padding in some browsers, so offset manually for the fixed nav
+      const navHeight = document.querySelector('nav')?.getBoundingClientRect().height ?? 0
+      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - navHeight, behavior: 'smooth' })
       setIsMobileMenuOpen(false)
     }
   }
@@ -40,6 +44,20 @@ const Navigation = () => {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-xl' : 'bg-gray-900/95 backdrop-blur-md'
     }`}>
+      {isEventActive && (
+        <a
+          href="#evento"
+          onClick={(e) => {
+            e.preventDefault()
+            scrollToSection('evento')
+          }}
+          className="block bg-[#0f2a5c] text-white text-center text-sm px-4 py-2 hover:bg-[#143572] transition-colors"
+        >
+          <Sparkles className="inline w-4 h-4 mr-2 text-sky-300 align-[-2px]" aria-hidden="true" />
+          <strong className="font-semibold">{featuredEvent.title}:</strong> {featuredEvent.tagline.toLowerCase()} · {featuredEvent.dateLabel}, {featuredEvent.timeLabel}
+          <span className="ml-2 underline underline-offset-2 hidden sm:inline">Más información</span>
+        </a>
+      )}
       <div className="section-container flex justify-between items-center py-4">
         {/* Logo */}
         <div 
