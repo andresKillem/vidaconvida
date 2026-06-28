@@ -96,7 +96,7 @@ const Footer = () => {
                 <MapPin className="w-4 h-4 text-orange-500 flex-shrink-0 mt-1" />
                 <span className="text-sm leading-relaxed">
                   10200 NW 25 St, Unit 113 Mezzanine<br />
-                  2nd Floor, Doral, FL 33172
+                  3rd Floor, Doral, FL 33172
                 </span>
               </div>
               <div className="flex items-center gap-3">

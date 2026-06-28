@@ -87,7 +87,7 @@ Enviado desde el formulario de contacto de vidaconvidamiami.com
     {
       icon: MapPin,
       title: 'Dirección',
-      content: '10200 NW 25 St, Unit 113 Mezzanine\n2nd Floor, Doral, FL 33172',
+      content: '10200 NW 25 St, Unit 113 Mezzanine\n3rd Floor, Doral, FL 33172',
       action: () => window.open('https://maps.google.com/?q=10200+NW+25+St,+Unit+113,+Doral,+FL+33172', '_blank')
     },
     {
@@ -321,7 +321,7 @@ Enviado desde el formulario de contacto de vidaconvidamiami.com
                   Encuéntranos en Google Maps
                 </h4>
                 <p className="text-gray-600 mb-4">
-                  10200 NW 25 St, Unit 113 Mezzanine, 2nd Floor, Doral, FL 33172
+                  10200 NW 25 St, Unit 113 Mezzanine, 3rd Floor, Doral, FL 33172
                 </p>
                 <button className="bg-orange-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-all duration-300">
                   Ver en Google Maps
