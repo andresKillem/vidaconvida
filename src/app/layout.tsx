@@ -1,23 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import { Fraunces, Figtree } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+// Serif display face for headings (warm, editorial) paired with a friendly sans for body text
+const fraunces = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
+const figtree = Figtree({
+  variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FF6B35",
+  themeColor: "#16130F",
 };
 
 export const metadata: Metadata = {
@@ -239,7 +241,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${montserrat.variable} ${openSans.variable} antialiased font-open-sans`}
+        className={`${fraunces.variable} ${figtree.variable} antialiased font-body bg-cream text-ink`}
       >
         {children}
       </body>

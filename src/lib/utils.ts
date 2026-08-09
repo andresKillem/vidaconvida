@@ -23,19 +23,6 @@ export function getNextSunday(): Date {
   return nextService
 }
 
-export function formatTimeUntil(targetDate: Date): {
-  days: number
-  hours: number
-  minutes: number
-  seconds: number
-} {
-  const now = new Date()
-  const diff = targetDate.getTime() - now.getTime()
-  
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-  
-  return { days, hours, minutes, seconds }
+export function capitalizeFirst(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }

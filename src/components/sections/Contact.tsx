@@ -1,333 +1,160 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { MapPin, Clock, Phone, Mail, Send, Heart, ExternalLink } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { useState } from 'react'
+import { MapPin, Clock, Phone, Mail, Send, CheckCircle2 } from 'lucide-react'
+import SectionHeading from '@/components/ui/SectionHeading'
+import { churchInfo } from '@/lib/church'
+
+const initialFormData = { name: '', email: '', phone: '', message: '', isFirstTime: false }
+
+const inputClassName =
+  'w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-ink placeholder:text-ink/40 transition-colors focus:border-ember focus:outline-none focus:ring-2 focus:ring-ember/20'
 
 const Contact = () => {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-    isFirstTime: false
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState(initialFormData)
+  const [hasOpenedEmail, setHasOpenedEmail] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-    )
+  // There is no backend (static site), so the form composes an email in the visitor's mail app
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
 
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll')
-    elements?.forEach((el) => observer.observe(el))
+    const emailBody = [
+      'Nuevo mensaje de contacto desde vidaconvidamiami.com',
+      '',
+      `Nombre: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Teléfono: ${formData.phone || 'No proporcionado'}`,
+      `Primera vez: ${formData.isFirstTime ? 'Sí' : 'No'}`,
+      '',
+      'Mensaje:',
+      formData.message,
+    ].join('\n')
 
-    return () => observer.disconnect()
-  }, [])
+    const subject = encodeURIComponent('Nuevo mensaje de contacto - vidaconvidamiami.com')
+    window.location.href = `mailto:${churchInfo.email}?subject=${subject}&body=${encodeURIComponent(emailBody)}`
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    try {
-      // Create email content
-      const emailContent = `
-Nuevo mensaje de contacto desde vidaconvidamiami.com
-
-Nombre: ${formData.name}
-Email: ${formData.email}
-Teléfono: ${formData.phone || 'No proporcionado'}
-Primera vez: ${formData.isFirstTime ? 'Sí' : 'No'}
-
-Mensaje:
-${formData.message}
-
----
-Enviado desde el formulario de contacto de vidaconvidamiami.com
-      `.trim()
-
-      // Create mailto link with pre-filled content
-      const subject = encodeURIComponent('Nuevo mensaje de contacto - vidaconvidamiami.com')
-      const body = encodeURIComponent(emailContent)
-      const mailtoLink = `mailto:secretaria@vidaconvidamiami.com?subject=${subject}&body=${body}`
-      
-      // Open email client
-      window.open(mailtoLink, '_blank')
-      
-      // Show success message
-      alert('¡Gracias por contactarnos! Se abrirá tu cliente de email para enviar el mensaje.')
-      
-      // Reset form
-      setFormData({ name: '', email: '', phone: '', message: '', isFirstTime: false })
-    } catch (error) {
-      console.error('Error al enviar el formulario:', error)
-      alert('Hubo un error al procesar tu mensaje. Por favor, inténtalo de nuevo.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    setHasOpenedEmail(true)
+    setFormData(initialFormData)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = event.target
+    setFormData((previous) => ({
+      ...previous,
+      [name]: type === 'checkbox' ? (event.target as HTMLInputElement).checked : value,
     }))
   }
 
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Dirección',
-      content: '10200 NW 25 St, Unit 113 Mezzanine\n3rd Floor, Doral, FL 33172',
-      action: () => window.open('https://maps.google.com/?q=10200+NW+25+St,+Unit+113,+Doral,+FL+33172', '_blank')
-    },
-    {
-      icon: Clock,
-      title: 'Horarios',
-      content: 'Domingos: 10:30 AM\nMiércoles: 8:00 PM (Oración vía Zoom)',
-    },
-    {
-      icon: Phone,
-      title: 'Teléfono',
-      content: '(561) 591-4771',
-      action: () => window.open('tel:+15615914771', '_self')
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      content: 'secretaria@vidaconvidamiami.com',
-      action: () => window.open('mailto:secretaria@vidaconvidamiami.com', '_self')
-    }
-  ]
-
   return (
-    <section ref={sectionRef} id="contact" className="py-20 bg-gray-100">
+    <section id="contact" className="bg-cream py-24 md:py-32">
       <div className="section-container">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-gray-900 mb-4">
-            Contáctanos
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Nos encantaría conocerte
-          </p>
-          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
-        </div>
+        <SectionHeading
+          eyebrow="Planea tu visita"
+          title="Nos encantaría conocerte"
+          lead="¿Tienes preguntas? ¿Necesitas oración? ¿Es tu primera vez? Escríbenos y con gusto te acompañamos."
+        />
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <div className="animate-on-scroll">
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold font-montserrat text-gray-900 mb-4">
-                Información de Contacto
-              </h3>
-              <p className="text-gray-600">
-                ¿Tienes preguntas? ¿Necesitas oración? ¿Es tu primera vez? ¡Contáctanos!
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {contactInfo.map((info) => (
-                <div
-                  key={info.title}
-                  className={`bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ${
-                    info.action ? 'cursor-pointer hover:-translate-y-1' : ''
-                  }`}
-                  onClick={info.action}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <info.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold font-montserrat text-gray-900 mb-2">
-                        {info.title}
-                      </h4>
-                      <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                        {info.content}
-                      </p>
-                      {info.action && (
-                        <div className="flex items-center gap-2 mt-2 text-orange-500 text-sm font-medium">
-                          <span>Abrir</span>
-                          <ExternalLink className="w-4 h-4" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+          <div className="reveal">
+            <dl className="divide-y divide-ink/10 border-y border-ink/10">
+              <div className="flex gap-4 py-5">
+                <MapPin className="mt-1 h-5 w-5 flex-shrink-0 text-ember" aria-hidden="true" />
+                <div>
+                  <dt className="eyebrow mb-1 text-ink-muted">Dirección</dt>
+                  <dd>
+                    <a href={churchInfo.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-ink hover:text-ember-deep">
+                      {churchInfo.addressLines[0]}
+                      <br />
+                      {churchInfo.addressLines[1]}
+                    </a>
+                  </dd>
                 </div>
-              ))}
-            </div>
-
-            {/* Social Media Links */}
-            <div className="mt-8 bg-white p-6 rounded-2xl shadow-lg">
-              <h4 className="font-bold font-montserrat text-gray-900 mb-4">
-                Síguenos en Redes Sociales
-              </h4>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => window.open('https://www.facebook.com/profile.php?id=61572900027929', '_blank')}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-medium transition-colors duration-300"
-                >
-                  Facebook
-                </button>
-                <button
-                  onClick={() => window.open('https://www.instagram.com/vidaconvida', '_blank')}
-                  className="flex-1 bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-xl font-medium transition-colors duration-300"
-                >
-                  Instagram
-                </button>
-                <button
-                  onClick={() => window.open('https://www.youtube.com/@VidaConVidaMiami', '_blank')}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white p-3 rounded-xl font-medium transition-colors duration-300"
-                >
-                  YouTube
-                </button>
               </div>
+              <div className="flex gap-4 py-5">
+                <Clock className="mt-1 h-5 w-5 flex-shrink-0 text-ember" aria-hidden="true" />
+                <div>
+                  <dt className="eyebrow mb-1 text-ink-muted">Horarios</dt>
+                  {churchInfo.serviceTimes.map((service) => (
+                    <dd key={service.day} className="text-ink">
+                      {service.day}: {service.time} <span className="text-ink-muted">· {service.label}</span>
+                    </dd>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-4 py-5">
+                <Phone className="mt-1 h-5 w-5 flex-shrink-0 text-ember" aria-hidden="true" />
+                <div>
+                  <dt className="eyebrow mb-1 text-ink-muted">Teléfono</dt>
+                  <dd><a href={churchInfo.phoneHref} className="text-ink hover:text-ember-deep">{churchInfo.phoneDisplay}</a></dd>
+                </div>
+              </div>
+              <div className="flex gap-4 py-5">
+                <Mail className="mt-1 h-5 w-5 flex-shrink-0 text-ember" aria-hidden="true" />
+                <div className="min-w-0">
+                  <dt className="eyebrow mb-1 text-ink-muted">Email</dt>
+                  <dd><a href={`mailto:${churchInfo.email}`} className="break-all text-ink hover:text-ember-deep">{churchInfo.email}</a></dd>
+                </div>
+              </div>
+            </dl>
+
+            <div className="mt-8 overflow-hidden rounded-3xl bg-sand">
+              <iframe
+                src={churchInfo.mapsEmbedUrl}
+                title="Mapa de la ubicación de Vida con Vida Miami en Doral"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-72 w-full border-0"
+              />
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="animate-on-scroll">
-            <div className="bg-white p-8 rounded-2xl shadow-xl">
-              <h3 className="text-2xl font-bold font-montserrat text-gray-900 mb-6">
-                Conecta con Nosotros
-              </h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block font-semibold text-gray-900 mb-2">
-                    Nombre Completo *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-colors duration-300"
-                    placeholder="Tu nombre completo"
-                  />
-                </div>
+          <div className="reveal rounded-[2rem] bg-sand p-6 sm:p-8 md:p-10">
+            <h3 className="mb-2 text-3xl font-medium text-ink">Conecta con nosotros</h3>
+            <p className="mb-8 text-ink-muted">Si esta es tu primera vez, ¡te damos una bienvenida especial!</p>
 
-                <div>
-                  <label htmlFor="email" className="block font-semibold text-gray-900 mb-2">
-                    Correo Electrónico *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-colors duration-300"
-                    placeholder="tu@email.com"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block font-semibold text-gray-900 mb-2">
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-colors duration-300"
-                    placeholder="(305) 123-4567"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block font-semibold text-gray-900 mb-2">
-                    Mensaje o Petición de Oración *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-colors duration-300 resize-vertical"
-                    placeholder="Cuéntanos cómo podemos orar por ti o si tienes alguna pregunta..."
-                  />
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    id="isFirstTime"
-                    name="isFirstTime"
-                    checked={formData.isFirstTime}
-                    onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 border-2 border-gray-300 rounded focus:ring-orange-500"
-                  />
-                  <label htmlFor="isFirstTime" className="text-gray-800 font-medium">
-                    Esta es mi primera vez visitando la iglesia
-                  </label>
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  variant="primary"
-                  size="lg"
-                  className="w-full"
-                >
-                  {isSubmitting ? (
-                    'Enviando...'
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      Enviar Mensaje
-                    </>
-                  )}
-                </Button>
-              </form>
-
-              <div className="mt-6 p-4 bg-orange-500/10 rounded-xl text-center">
-                <Heart className="w-6 h-6 text-orange-500 mx-auto mb-2" />
-                <p className="text-sm text-gray-800">
-                  Si esta es tu primera vez, ¡te damos una bienvenida especial!
+            {hasOpenedEmail && (
+              <div role="status" className="mb-6 flex gap-3 rounded-2xl bg-lagoon-soft p-4 text-ink">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-lagoon-deep" aria-hidden="true" />
+                <p className="text-sm">
+                  ¡Gracias por escribirnos! Abrimos tu aplicación de correo con el mensaje listo; solo tienes que enviarlo.
+                  Si no se abrió, escríbenos directamente a{' '}
+                  <a href={`mailto:${churchInfo.email}`} className="text-link break-all">{churchInfo.email}</a>.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
+            )}
 
-        {/* Map placeholder */}
-        <div className="mt-16 animate-on-scroll">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div
-              className="h-96 bg-gradient-to-br from-teal-500/20 to-orange-500/20 flex items-center justify-center cursor-pointer hover:from-teal-500/30 hover:to-orange-500/30 transition-all duration-300"
-              onClick={() => window.open('https://maps.google.com/?q=10200+NW+25+St,+Unit+113,+Doral,+FL+33172', '_blank')}
-            >
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-                <h4 className="text-xl font-bold font-montserrat text-gray-900 mb-2">
-                  Encuéntranos en Google Maps
-                </h4>
-                <p className="text-gray-600 mb-4">
-                  10200 NW 25 St, Unit 113 Mezzanine, 3rd Floor, Doral, FL 33172
-                </p>
-                <button className="bg-orange-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-all duration-300">
-                  Ver en Google Maps
-                </button>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="mb-2 block text-sm font-semibold text-ink">Nombre completo *</label>
+                  <input type="text" id="name" name="name" autoComplete="name" value={formData.name} onChange={handleChange} required className={inputClassName} placeholder="Tu nombre" />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-ink">Teléfono</label>
+                  <input type="tel" id="phone" name="phone" autoComplete="tel" value={formData.phone} onChange={handleChange} className={inputClassName} placeholder="(305) 123-4567" />
+                </div>
               </div>
-            </div>
+
+              <div>
+                <label htmlFor="email" className="mb-2 block text-sm font-semibold text-ink">Correo electrónico *</label>
+                <input type="email" id="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required className={inputClassName} placeholder="tu@email.com" />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="mb-2 block text-sm font-semibold text-ink">Mensaje o petición de oración *</label>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={5} className={`${inputClassName} resize-y`} placeholder="Cuéntanos cómo podemos orar por ti o si tienes alguna pregunta..." />
+              </div>
+
+              <label htmlFor="isFirstTime" className="flex cursor-pointer items-center gap-3 text-ink">
+                <input type="checkbox" id="isFirstTime" name="isFirstTime" checked={formData.isFirstTime} onChange={handleChange} className="h-5 w-5 rounded border-ink/30 accent-ember" />
+                Esta es mi primera vez visitando la iglesia
+              </label>
+
+              <button type="submit" className="btn-primary w-full py-3.5">
+                <Send className="h-4 w-4" aria-hidden="true" />
+                Enviar mensaje
+              </button>
+            </form>
           </div>
         </div>
       </div>

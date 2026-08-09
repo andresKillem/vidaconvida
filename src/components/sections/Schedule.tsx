@@ -1,129 +1,52 @@
-'use client'
+import { Church, Baby, HandHeart, Users, Check } from 'lucide-react'
+import SectionHeading from '@/components/ui/SectionHeading'
 
-import { useEffect, useRef } from 'react'
-import { Church, Baby, HandHeart, Users } from 'lucide-react'
+const services = [
+  { icon: Church, title: 'Servicio dominical', description: 'Adoración vibrante y palabra transformadora', time: 'Domingos 10:30 AM' },
+  { icon: Baby, title: 'Vida Kids', description: 'Clases dinámicas adaptadas por edades', time: 'Durante el servicio' },
+  { icon: Users, title: 'Vida Youth', description: 'Jóvenes de 12 a 17 años creciendo en fe, amistad y propósito', time: 'Durante el servicio' },
+  { icon: HandHeart, title: 'Noche de oración', description: 'Tiempo de intercesión y búsqueda vía Zoom', time: 'Miércoles 8:00 PM' },
+]
+
+const visitPerks = ['Ambiente familiar', 'Cuidado de niños', 'Estacionamiento gratis']
 
 const Schedule = () => {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-    )
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll')
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
-  const services = [
-    {
-      icon: Church,
-      title: 'Servicio Dominical',
-      description: 'Adoración vibrante y palabra transformadora',
-      time: 'Domingos 10:30 AM',
-      color: 'bg-orange-500'
-    },
-    {
-      icon: Baby,
-      title: 'Vida Kids',
-      description: 'Clases dinámicas adaptadas por edades',
-      time: 'Durante el servicio',
-      color: 'bg-teal-500'
-    },
-    {
-      icon: HandHeart,
-      title: 'Noche de Oración',
-      description: 'Tiempo de intercesión y búsqueda vía Zoom',
-      time: 'Miércoles 8:00 PM',
-      color: 'bg-yellow-500'
-    },
-    {
-      icon: Users,
-      title: 'Vida Youth',
-      description: 'Jóvenes creciendo en fe, amistad y propósito (12-17 años)',
-      time: 'Durante el servicio',
-      color: 'bg-blue-500'
-    }
-  ]
-
   return (
-    <section ref={sectionRef} id="schedule" className="py-20 bg-white">
-      <div className="section-container">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-gray-900 mb-4">
-            Nuestros Servicios
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Te esperamos cada semana para crecer juntos en fe
-          </p>
-          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
-        </div>
+    <section id="schedule" className="relative overflow-hidden bg-ink py-24 text-cream md:py-32">
+      {/* Warm glow that echoes the logo's arcs */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 h-[30rem] w-[30rem] rounded-full border-[28px] border-ember/15" />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-52 -right-32 h-[34rem] w-[34rem] rounded-full border-[28px] border-lagoon/15" />
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="section-container relative">
+        <SectionHeading
+          tone="dark"
+          eyebrow="Nuestros servicios"
+          title="Te esperamos cada semana para crecer juntos en fe"
+        />
+
+        <div className="grid gap-px overflow-hidden rounded-3xl bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => (
-            <div
-              key={service.title}
-              className="group animate-on-scroll bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 text-center overflow-hidden relative"
-            >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              
-              {/* Icon */}
-              <div className={`relative z-10 w-16 h-16 ${service.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                <service.icon className="w-8 h-8 text-white" />
-              </div>
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <h3 className="text-lg font-bold font-montserrat text-gray-900 mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                  {service.description}
-                </p>
-                <div className="text-orange-500 font-semibold text-lg">
-                  {service.time}
-                </div>
-              </div>
-
-              {/* Hover Effect Border */}
-              <div className={`absolute inset-0 border-2 border-transparent group-hover:border-gradient-to-br group-hover:${service.color} rounded-2xl transition-all duration-300`} />
-            </div>
+            <article key={service.title} className="reveal flex flex-col bg-ink p-7 md:p-8">
+              <service.icon className="mb-8 h-6 w-6 text-gold" strokeWidth={1.6} aria-hidden="true" />
+              <h3 className="mb-2 text-2xl font-medium text-cream">{service.title}</h3>
+              <p className="mb-4 font-semibold text-gold">{service.time}</p>
+              <p className="text-cream/60">{service.description}</p>
+            </article>
           ))}
         </div>
 
-        {/* Call to Action - Compact */}
-        <div className="text-center mt-12 animate-on-scroll">
-          <div className="bg-gradient-to-r from-orange-50 to-teal-50 rounded-xl p-6 max-w-3xl mx-auto border border-orange-200">
-            <h3 className="text-xl font-bold font-montserrat text-gray-900 mb-3">
-              ¡Ven y únete a nuestra familia!
-            </h3>
-            <div className="flex justify-center items-center gap-4 text-sm text-gray-700 flex-wrap">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-orange-500 rounded-full" />
-                <span>Ambiente familiar</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-teal-500 rounded-full" />
-                <span>Cuidado de niños</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-                <span>Estacionamiento gratis</span>
-              </div>
-            </div>
-          </div>
+        <div className="reveal mt-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-cream/80">
+            {visitPerks.map((perk) => (
+              <li key={perk} className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-gold" aria-hidden="true" />
+                {perk}
+              </li>
+            ))}
+          </ul>
+          <a href="#contact" className="btn-primary">
+            ¡Ven y únete a nuestra familia!
+          </a>
         </div>
       </div>
     </section>

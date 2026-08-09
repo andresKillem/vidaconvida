@@ -155,10 +155,11 @@ export async function fetchChannelFeed(apiKey: string): Promise<ChannelFeed> {
 
 // Dates are shown in Miami time; parsing "2024-12-22" as UTC would show the day before
 export function formatServiceDate(isoTimestamp: string): string {
-  return new Date(isoTimestamp).toLocaleDateString('es-US', {
+  const label = new Date(isoTimestamp).toLocaleDateString('es-US', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
     timeZone: 'America/New_York',
   })
+  return label.charAt(0).toUpperCase() + label.slice(1)
 }

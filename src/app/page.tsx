@@ -11,23 +11,27 @@ import DynamicVideos from '@/components/sections/DynamicVideos'
 import Gallery from '@/components/sections/Gallery'
 import Contact from '@/components/sections/Contact'
 import Footer from '@/components/sections/Footer'
+import ScrollReveal from '@/components/ui/ScrollReveal'
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <>
+      <ScrollReveal />
       <Navigation />
-      <Hero />
-      <FeaturedEvent />
-      <About />
-      <Values />
-      <History />
-      <Pastors />
-      <Schedule />
-      <Ministries />
-      <DynamicVideos />
-      <Gallery />
-      <Contact />
+      <main>
+        <Hero />
+        <FeaturedEvent />
+        <About />
+        <Values />
+        <History />
+        <Pastors />
+        <Schedule />
+        <Ministries />
+        <DynamicVideos />
+        <Gallery />
+        <Contact />
+      </main>
       <Footer />
-    </div>
+    </>
   )
 }

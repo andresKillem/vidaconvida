@@ -1,216 +1,211 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { Play, ExternalLink, Calendar } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Play, ArrowUpRight, Radio, Facebook, Instagram } from 'lucide-react'
+import SectionHeading from '@/components/ui/SectionHeading'
+import { churchInfo } from '@/lib/church'
+import { cn } from '@/lib/utils'
+import {
+  ChannelFeed,
+  ServiceVideo,
+  YOUTUBE_CHANNEL_URL,
+  fallbackFeed,
+  fetchChannelFeed,
+  formatServiceDate,
+} from '@/lib/youtubeFeed'
 
-interface VideoItem {
-  id: string
-  title: string
-  description: string
-  youtubeId: string
-  publishedAt: string
-}
+const youtubeApiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY ?? ''
 
 const DynamicVideos = () => {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null)
-  const [showEmbed, setShowEmbed] = useState(false)
+  const [feed, setFeed] = useState<ChannelFeed>(fallbackFeed)
+  const [selectedService, setSelectedService] = useState<ServiceVideo>(fallbackFeed.services[0])
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  // Videos recientes del canal - actualizados manualmente o via API
-  const videos: VideoItem[] = [
-    {
-      id: '1',
-      title: 'Servicio Dominical en Vivo',
-      description: 'Únete a nuestro servicio de adoración cada domingo',
-      youtubeId: 'uEqbM91RRfc',
-      publishedAt: '2024-12-22'
-    },
-    {
-      id: '2',
-      title: '¡Cuando el Cielo Marca la Hora!',
-      description: 'Pastor Mauricio Ramírez - Un mensaje de esperanza y fe',
-      youtubeId: '01nU2nxw8Ig',
-      publishedAt: '2024-12-15'
-    },
-    {
-      id: '3',
-      title: 'Papá, ¿dónde estás?',
-      description: 'Pastor Jhon Arévalo - Mensaje sobre la paternidad',
-      youtubeId: 'OpPESruSh7g',
-      publishedAt: '2024-12-08'
-    },
-    {
-      id: '4',
-      title: 'Superando el Agobio',
-      description: 'Mensaje de esperanza y fortaleza en tiempos difíciles',
-      youtubeId: 'N84lOSimzFY',
-      publishedAt: '2024-12-01'
-    },
-    {
-      id: '5',
-      title: 'Lucha por tu Familia',
-      description: 'El valor de la familia en el plan de Dios',
-      youtubeId: 'BF1MYQ4UmkM',
-      publishedAt: '2024-11-24'
+  useEffect(() => {
+    if (!youtubeApiKey) return
+    let isCancelled = false
+
+    fetchChannelFeed(youtubeApiKey)
+      .then((latestFeed) => {
+        if (isCancelled) return
+        setFeed(latestFeed)
+        if (latestFeed.services[0]) setSelectedService(latestFeed.services[0])
+      })
+      .catch((error) => {
+        // Keep showing the bundled snapshot
+        console.warn('No se pudieron cargar los videos recientes de YouTube:', error)
+      })
+
+    return () => {
+      isCancelled = true
     }
-  ]
-
-  useEffect(() => {
-    setSelectedVideo(videos[0])
   }, [])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-    )
-
-    const elements = sectionRef.current?.querySelectorAll('.animate-on-scroll')
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
-
-  const playVideo = (video: VideoItem) => {
-    setSelectedVideo(video)
-    setShowEmbed(true)
+  const selectService = (service: ServiceVideo) => {
+    setSelectedService(service)
+    setIsPlaying(true)
   }
 
   return (
-    <section ref={sectionRef} id="videos" className="py-20 bg-gray-100">
+    <section id="videos" className="bg-sand py-24 md:py-32">
       <div className="section-container">
-        {/* Section Header */}
-        <div className="text-center mb-12 animate-on-scroll">
-          <h2 className="text-4xl md:text-5xl font-bold font-montserrat text-gray-900 mb-4">
-            Videos Recientes
-          </h2>
-          <p className="text-xl text-gray-600 mb-4">
-            Revive nuestros sermones y momentos especiales
-          </p>
-          <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full" />
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHeading
+            eyebrow="Mensajes recientes"
+            title="Vuelve a ver el servicio del domingo"
+            lead="Cada domingo transmitimos en vivo. Aquí siempre encontrarás lo más reciente del canal."
+            className="md:mb-16"
+          />
+          <a
+            href={YOUTUBE_CHANNEL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline-dark reveal mb-12 shrink-0 self-start md:mb-16 md:self-auto"
+          >
+            Canal de YouTube
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Video Player */}
-          <div className="lg:col-span-2 animate-on-scroll">
-            {selectedVideo && (
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                {/* Video Player or Thumbnail */}
-                <div className="relative aspect-video bg-gray-900">
-                  {showEmbed ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
-                      title={selectedVideo.title}
-                      className="absolute inset-0 w-full h-full"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <>
-                      <img
-                        src={`https://img.youtube.com/vi/${selectedVideo.youtubeId}/maxresdefault.jpg`}
-                        alt={selectedVideo.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Fallback to hqdefault if maxresdefault doesn't exist
-                          (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${selectedVideo.youtubeId}/hqdefault.jpg`
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <button
-                          onClick={() => setShowEmbed(true)}
-                          className="bg-red-600 hover:bg-red-700 text-white rounded-full p-5 transition-all duration-300 hover:scale-110 shadow-2xl"
-                        >
-                          <Play className="w-10 h-10" />
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Video Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold font-montserrat text-gray-900 mb-2">
-                    {selectedVideo.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {selectedVideo.description}
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {formatDate(selectedVideo.publishedAt)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+        <div className="grid gap-8 lg:grid-cols-[1.7fr_1fr]">
+          {/* Featured player */}
+          <div className="reveal">
+            <div className="relative aspect-video overflow-hidden rounded-3xl bg-ink">
+              {isPlaying ? (
+                <iframe
+                  key={selectedService.youtubeId}
+                  src={`https://www.youtube-nocookie.com/embed/${selectedService.youtubeId}?autoplay=1&rel=0`}
+                  title={`${selectedService.title} — ${formatServiceDate(selectedService.startedAt)}`}
+                  className="absolute inset-0 h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsPlaying(true)}
+                  className="group absolute inset-0 h-full w-full"
+                  aria-label={`Reproducir ${selectedService.title} del ${formatServiceDate(selectedService.startedAt)}`}
+                >
+                  <img
+                    src={`https://i.ytimg.com/vi/${selectedService.youtubeId}/hqdefault.jpg`}
+                    alt=""
+                    className="h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100"
+                  />
+                  <span className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent" />
+                  <span className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cream text-ink shadow-xl transition-transform group-hover:scale-105">
+                    <Play className="ml-1 h-8 w-8 fill-current" aria-hidden="true" />
+                  </span>
+                </button>
+              )}
+            </div>
+            <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 className="text-2xl font-medium text-ink">{selectedService.title}</h3>
+              <p className="text-ink-muted">{formatServiceDate(selectedService.startedAt)}</p>
+            </div>
           </div>
 
-          {/* Video List */}
-          <div className="animate-on-scroll">
-            <h3 className="text-xl font-bold font-montserrat text-gray-900 mb-6">
-              Más Videos
-            </h3>
-            <div className="space-y-4">
-              {videos.map((video) => (
-                <div
-                  key={video.id}
-                  onClick={() => playVideo(video)}
-                  className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden ${
-                    selectedVideo?.id === video.id ? 'ring-2 ring-orange-500' : 'hover:-translate-y-1'
-                  }`}
-                >
-                  <div className="flex gap-4 p-4">
-                    <div className="relative flex-shrink-0">
+          {/* Previous services */}
+          <div className="reveal">
+            <h3 className="eyebrow mb-4 text-ink-muted">Servicios anteriores</h3>
+            <ul className="space-y-3">
+              {feed.services.map((service) => {
+                const isSelected = service.youtubeId === selectedService.youtubeId
+                return (
+                  <li key={service.youtubeId}>
+                    <button
+                      type="button"
+                      onClick={() => selectService(service)}
+                      aria-current={isSelected ? 'true' : undefined}
+                      className={cn(
+                        'flex w-full items-center gap-4 rounded-2xl p-2.5 text-left transition-colors',
+                        isSelected ? 'bg-cream shadow-sm' : 'hover:bg-cream/60'
+                      )}
+                    >
                       <img
-                        src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`}
-                        alt={video.title}
-                        className="w-24 h-16 object-cover rounded-lg"
+                        src={`https://i.ytimg.com/vi/${service.youtubeId}/mqdefault.jpg`}
+                        alt=""
+                        loading="lazy"
+                        className="aspect-video w-28 flex-shrink-0 rounded-xl object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
-                        <Play className="w-5 h-5 text-white" />
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">
-                        {video.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                        <Calendar className="w-3 h-3" />
-                        <span>{formatDate(video.publishedAt)}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                      <span className="min-w-0">
+                        {service.isLive && (
+                          <span className="mb-1 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-red-600">
+                            <Radio className="h-3 w-3" aria-hidden="true" /> En vivo
+                          </span>
+                        )}
+                        <span className="block font-semibold text-ink">{service.title}</span>
+                        <span className="block text-sm text-ink-muted">{formatServiceDate(service.startedAt)}</span>
+                      </span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
 
-            {/* YouTube Channel Link */}
-            <div className="mt-6 text-center">
-              <button
-                onClick={() => window.open('https://www.youtube.com/@VidaConVidaMiami', '_blank')}
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-2 mx-auto"
+        {/* Shorts */}
+        {feed.shorts.length > 0 && (
+          <div className="mt-20">
+            <div className="reveal mb-6 flex items-end justify-between gap-4">
+              <h3 className="text-3xl font-medium text-ink">Palabra en un minuto</h3>
+              <a
+                href={`${YOUTUBE_CHANNEL_URL}/shorts`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link shrink-0 text-sm"
               >
-                <ExternalLink className="w-4 h-4" />
-                Ver Todos los Videos
-              </button>
+                Ver todos
+              </a>
             </div>
+            <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:px-8">
+              {feed.shorts.map((short) => (
+                <li key={short.youtubeId} className="w-44 flex-shrink-0 snap-start md:w-52">
+                  <a
+                    href={`https://www.youtube.com/shorts/${short.youtubeId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block"
+                  >
+                    <div className="relative aspect-[9/16] overflow-hidden rounded-2xl bg-ink">
+                      <img
+                        src={`https://i.ytimg.com/vi/${short.youtubeId}/hqdefault.jpg`}
+                        alt=""
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <span className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+                      <Play className="absolute right-3 top-3 h-5 w-5 fill-cream text-cream" aria-hidden="true" />
+                      <p className="absolute inset-x-3 bottom-3 line-clamp-3 text-sm font-semibold leading-snug text-cream">
+                        {short.title}
+                      </p>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Facebook & Instagram */}
+        <div className="reveal mt-20 flex flex-col items-start justify-between gap-8 rounded-[2rem] bg-ink p-8 text-cream md:flex-row md:items-center md:p-12">
+          <div className="max-w-lg">
+            <p className="eyebrow mb-4 text-gold">Síguenos</p>
+            <h3 className="mb-3 text-3xl font-medium">Lo último de nuestra comunidad</h3>
+            <p className="leading-relaxed text-cream/70">
+              Anuncios, fotos de los servicios y transmisiones en vivo en nuestras redes.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a href={churchInfo.social.facebook} target="_blank" rel="noopener noreferrer" className="btn-outline-light">
+              <Facebook className="h-4 w-4" aria-hidden="true" />
+              Facebook
+            </a>
+            <a href={churchInfo.social.instagram} target="_blank" rel="noopener noreferrer" className="btn-outline-light">
+              <Instagram className="h-4 w-4" aria-hidden="true" />
+              Instagram
+            </a>
           </div>
         </div>
       </div>
