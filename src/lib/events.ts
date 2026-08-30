@@ -48,8 +48,9 @@ export function isEventActive(event: FeaturedEvent, now: number = Date.now()): b
 
 // The site is a static export, so the build-time check alone would keep an expired
 // event visible until the next deploy; re-check in the browser after hydration.
+// Initial state matches the static HTML (rendered while the event was upcoming) to avoid a hydration mismatch.
 export function useEventActive(event: FeaturedEvent): boolean {
-  const [isActive, setIsActive] = useState(() => isEventActive(event))
+  const [isActive, setIsActive] = useState(true)
 
   useEffect(() => {
     setIsActive(isEventActive(event))
