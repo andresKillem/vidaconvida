@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Youtube } from 'lucide-react'
 import { churchInfo } from '@/lib/church'
+import BrandLogo from '@/components/ui/BrandLogo'
 
 const footerLinks = [
   { id: 'about', label: 'Nosotros' },
@@ -7,6 +8,7 @@ const footerLinks = [
   { id: 'pastors', label: 'Pastores' },
   { id: 'schedule', label: 'Servicios' },
   { id: 'ministries', label: 'Ministerios' },
+  { id: 'comunidad', label: 'Comunidad' },
   { id: 'donar', label: 'Donar' },
   { id: 'videos', label: 'Mensajes' },
   { id: 'contact', label: 'Contacto' },
@@ -25,7 +27,7 @@ const Footer = () => {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_1fr_1.3fr]">
           <div>
             <div className="mb-6 flex items-center gap-3">
-              <img src="/images/logoVida.jpg" alt="" width={48} height={48} className="h-12 w-12 rounded-full ring-1 ring-white/15" />
+              <BrandLogo className="h-16 w-16" />
               <p className="font-display text-xl">Vida con Vida <span className="text-cream/50">Miami</span></p>
             </div>
             <p className="max-w-xs font-display text-2xl italic leading-snug text-cream/85">

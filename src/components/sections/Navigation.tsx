@@ -1,14 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X, Sparkles } from 'lucide-react'
-import { featuredEvent, useEventActive } from '@/lib/events'
+import { Menu, X } from 'lucide-react'
+import BrandLogo from '@/components/ui/BrandLogo'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { id: 'about', label: 'Nosotros' },
   { id: 'schedule', label: 'Servicios' },
   { id: 'ministries', label: 'Ministerios' },
+  { id: 'comunidad', label: 'Comunidad' },
   { id: 'videos', label: 'Mensajes' },
   { id: 'gallery', label: 'Galería' },
   { id: 'contact', label: 'Contacto' },
@@ -17,7 +18,6 @@ const navItems = [
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const isEventActive = useEventActive(featuredEvent)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40)
@@ -30,17 +30,6 @@ const Navigation = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      {isEventActive && (
-        <a
-          href="#evento"
-          className="block bg-[#0f2a5c] px-4 py-2 text-center text-sm text-white transition-colors hover:bg-[#143572]"
-        >
-          <Sparkles className="mr-2 inline h-4 w-4 align-[-2px] text-sky-300" aria-hidden="true" />
-          <strong className="font-semibold">{featuredEvent.title}:</strong> {featuredEvent.tagline.toLowerCase()} · {featuredEvent.dateLabel}, {featuredEvent.timeLabel}
-          <span className="ml-2 hidden underline underline-offset-2 sm:inline">Más información</span>
-        </a>
-      )}
-
       <nav
         aria-label="Principal"
         className={cn(
@@ -50,13 +39,7 @@ const Navigation = () => {
       >
         <div className="section-container flex items-center justify-between py-3.5">
           <a href="#hero" className="flex items-center gap-3 text-cream" onClick={() => setIsMobileMenuOpen(false)}>
-            <img
-              src="/images/logoVida.jpg"
-              alt=""
-              width={44}
-              height={44}
-              className="h-11 w-11 rounded-full object-cover ring-1 ring-white/15"
-            />
+            <BrandLogo className="h-12 w-12" />
             <span className="font-display text-lg font-medium leading-none">
               Vida con Vida
               <span className="eyebrow mt-1 block text-[0.65rem] text-cream/60">Miami</span>
