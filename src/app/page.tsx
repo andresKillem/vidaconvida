@@ -1,5 +1,6 @@
 import Navigation from '@/components/sections/Navigation'
 import Hero from '@/components/sections/Hero'
+import FeaturedEvent from '@/components/sections/FeaturedEvent'
 import About from '@/components/sections/About'
 import Values from '@/components/sections/Values'
 import History from '@/components/sections/History'
@@ -16,6 +17,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Navigation />
       <Hero />
+      <FeaturedEvent />
       <About />
       <Values />
       <History />

@@ -22,6 +22,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keep section headings clear of the fixed navigation (and event bar) */
+  scroll-padding-top: 7rem;
 }
 
 body {
