@@ -29,12 +29,12 @@ export const featuredEvent: FeaturedEvent = {
   highlights: ['Comida', 'Bebidas', 'Juegos', 'Show de talentos familiar'],
   dateLabel: 'Sábado 31 de octubre',
   timeLabel: '4:00 PM – 8:00 PM',
-  address: '10200 NW 25th St, Suite 113M, Doral, FL 33172',
+  address: '10200 NW 25th St, Suite 113M, 3rd Floor, Doral, FL 33172',
   mapsUrl: 'https://maps.google.com/?q=10200+NW+25+St,+Unit+113,+Doral,+FL+33172',
   flyerImage: '/images/octubrillante.jpg',
   flyerPreviewImage: '/images/octubrillante-sm.jpg',
   flyerAlt:
-    'Invitación a Octubrillante, una pijamada con Jesús: comida, bebidas, juegos y show de talentos familiar. Sábado 31 de octubre, de 4:00 a 8:00 PM, en 10200 NW 25th Street, Suite 113M, Doral FL 33172. "Yo soy la luz del mundo" — Juan 8:12',
+    'Invitación a Octubrillante, una pijamada con Jesús: comida, bebidas, juegos y show de talentos familiar. Sábado 31 de octubre, de 4:00 a 8:00 PM, en 10200 NW 25th Street, Suite 113M, 3rd Floor, Doral FL 33172. "Yo soy la luz del mundo" — Juan 8:12',
   verse: {
     text: 'Yo soy la luz del mundo; el que me sigue no andará en tinieblas, sino que tendrá la luz de la vida.',
     reference: 'Juan 8:12',

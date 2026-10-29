@@ -161,7 +161,7 @@ const Hero = () => {
             <MapPin className="w-5 h-5 text-yellow-400 flex-shrink-0" />
             <p className="text-center leading-relaxed">
               10200 NW 25 St, Unit 113 Mezzanine<br />
-              2nd Floor, Doral, FL 33172
+              3rd Floor, Doral, FL 33172
             </p>
           </div>
         </div>

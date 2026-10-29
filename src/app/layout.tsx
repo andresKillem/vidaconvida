@@ -133,7 +133,7 @@ const jsonLdChurch = {
   "email": "secretaria@vidaconvidamiami.com",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "10200 NW 25 St, Unit 113 Mezzanine, 2nd Floor",
+    "streetAddress": "10200 NW 25 St, Unit 113 Mezzanine, 3rd Floor",
     "addressLocality": "Doral",
     "addressRegion": "FL",
     "postalCode": "33172",
@@ -188,7 +188,7 @@ const jsonLdFAQ = {
       "name": "¿Dónde está ubicada la Iglesia Vida con Vida Miami?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Estamos ubicados en 10200 NW 25 St, Unit 113 Mezzanine, 2nd Floor, Doral, FL 33172."
+        "text": "Estamos ubicados en 10200 NW 25 St, Unit 113 Mezzanine, 3rd Floor, Doral, FL 33172."
       }
     },
     {
